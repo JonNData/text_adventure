@@ -1,6 +1,6 @@
 from room import Room
 from player import Player
-import textwrap
+import sys
 # Declare all the rooms
 
 room = {
@@ -46,18 +46,22 @@ print(f'Welcome!\nLocation: {player.current_room.name} \nDescription: {player.cu
 #
 
 while True:
-    player_input = input("Choose a direction ['n', 's', 'e', 'w'] or 'q' to quit: ").lower()
+    player_input = input("Choose a direction ['n', 's', 'e', 'w'] or 'q' to quit: ").lower().split()
+    if len(player_input) == 1:
+        if player_input[0] == 'q' or player_input[0] == 'quit':
+            print(f'Thanks for playing') 
+            break
 
-    if player_input == 'q' or player_input == 'quit':
-        print(f'Thanks for playing') 
-        break
+        if player_input[0] in directions:
+            try:
+                player.navigate(player_input[0])
+                print(f'Location: {player.current_room.name} \nDescription: {player.current_room.description}\n')
+                print("_,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,_")
+            except AttributeError:
+                print("You cannot go that way")
+    elif len(player_input) == 2:
+        if player_input[0] == 'get':
+            # check item in list of items, add to inventory, remove from room
 
-    if player_input in directions:
-        try:
-            player.navigate(player_input)
-            print(f'Location: {player.current_room.name} \nDescription: {player.current_room.description}\n')
-            print("_,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,_")
-        except AttributeError:
-            print("You cannot go that way")
     else:
         print('Error. Enter a direction (n, s, e, w)')

@@ -4,16 +4,17 @@
 from room import Room
 
 class Player:
-    def __init__(self, name, current_room):
+    def __init__(self, name, current_room, items=[]):
         super().__init__()
         self.name = name
         self.current_room = current_room
-        self.items = []
+        self.items = items
         
     def __str__(self):
         return f'Name: {self.name}, Room: {self.current_room}'
     
     def navigate(self, direction):
-        if getattr(self.current_room, f'{direction}_to'):
-            self.current_room = getattr(self.current_room, f'{direction}_to')
+        self.current_room = getattr(self.current_room, f'{direction}_to')
     
+    def get_item(self, item):
+        self.items.append(item)
