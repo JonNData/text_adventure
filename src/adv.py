@@ -34,6 +34,8 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Room items
+room['outside'].add_item("Dagger")
 #
 # Main
 #
@@ -47,6 +49,7 @@ print(f'Welcome!\nLocation: {player.current_room.name} \nDescription: {player.cu
 
 while True:
     player_input = input("Choose a direction ['n', 's', 'e', 'w'] or 'q' to quit: ").lower().split()
+    # 1 word command
     if len(player_input) == 1:
         if player_input[0] == 'q' or player_input[0] == 'quit':
             print(f'Thanks for playing') 
@@ -59,9 +62,17 @@ while True:
                 print("_,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,_")
             except AttributeError:
                 print("You cannot go that way")
+    # 2 word commands
     elif len(player_input) == 2:
         if player_input[0] == 'get':
-            # check item in list of items, add to inventory, remove from room
+            if player_input[1] not in room.items:
+                print("Can only get items currently in the room")
+            elif player_input[1] in room.items:
+                player.get_item(player_input[1])
+                room.grabbed_item()
+            else:
+                print("Invalid command")
+                # check item in list of items, add to inventory, remove from room
 
     else:
         print('Error. Enter a direction (n, s, e, w)')

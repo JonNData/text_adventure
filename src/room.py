@@ -10,9 +10,15 @@ class Room:
         self.description = description
         self.items = items
     
-    def room_items(self):
+    def view_room_items(self):
         print("You see {self.items} in the room")
 
-    
+    def grabbed_item(self, item):
+        self.items.remove(item)
+        print("You picked up {item}")
+
+    def add_item(self, item):
+        self.items += item
+
     def __str__(self):
         return f'{self.name} - {self.description}'
